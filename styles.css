@@ -41,7 +41,7 @@ body{
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
-    background-color: dark;
+    
 }
 
 .flex-container{
@@ -55,22 +55,41 @@ body{
     gap: 2px
 }
 
-.box{
+.box {
     width: 293px;
     height: 588px;
     max-width: 293px;
     height: 588px;
     min-width: 50px;
-    transition: all 0.4s ease; /* This is where we apply the smooth transition s*/
+    overflow: hidden; /* Here I ensure that the the blur effect doesn't have to exceed the limits of the box */
 }
-
-/* .box:hover{
-    filter: grayscale(100%) blur(5px); /* Here is where we make the image get blurred when we hover */
-/* } */  */
-
 .blurred {
     position: relative;
 }
+
+.blurred::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 1;
+    filter: grayscale(100%);
+    transition: all 0.9s ease;
+    
+    
+}
+
+
+.inside-box {
+    transform: translateY(-20px);
+    /* transition: transform 0.5s ease; */
+     /* Here I put in a smooth transition when the text goes up*/
+}
+
+
 
 .first{
     background-image: url('./images/image1.jpeg');
@@ -96,13 +115,10 @@ body{
     background-position: center;
 }
 
-.inside-box{
-    position: relative;
-    z-index: 2;
-}
 
 .inside-box{
-    position: absolute;
+    position: relative;
+    z-index: 3;
     display: flex;
     padding: 2rem;
     flex-direction: column;
@@ -115,12 +131,12 @@ body{
     .animal,
     .country,
     .knowmore {
-        dsiplay: none !important;
+        display: none !important;
     }
 }
 
 .animal{
-    font-family: DIN Condensed;
+    font-family: DIN Condensed, sans-serif;
     font-size: 38px;
     font-weight: 400;
     line-height: 38px;
@@ -139,10 +155,11 @@ body{
 }
 
 .knowmore {
-    display: none;
+    display: absolute;
     color: rgb(60, 188, 230) !important;
     font-family: Poppins;
 }
+
 
 .animal:hover .knowmore {
     display: block
